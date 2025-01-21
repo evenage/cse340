@@ -1,0 +1,230 @@
+/******* Change Box Model ***************/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+/******* Change Box Model ***************/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Roboto", sans-serif;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-image: url("/images/site/small_check.jpg");
+  background-repeat: repeat;
+  background-size: auto;
+  background-position: center;
+  background-color: #f4f4f4;
+  padding: 20px;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+main {
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: #222;
+}
+
+body .content-wrapper {
+  max-width: 1200px;
+  margin: 70 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin-top: 0;
+  justify-content: space-around;
+  background-color: #444;
+  flex-direction: row;
+  width: auto;
+  text-transform: capitalize;
+}
+
+nav ul li {
+  margin: 0 1rem;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Header Styles */
+#top-header {
+  background-color: #222;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#top-header a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.siteName a {
+  font-family: "Lobster", cursive;
+  font-size: 1.8rem;
+}
+
+#tools a {
+  font-size: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+#tools a:hover {
+  background-color: #0056b3;
+}
+
+/* Main Content Styles */
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+.container h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.container .welcome-image {
+  max-width: 100%;
+  height: 600px;
+  margin-bottom: 20px;
+}
+
+.container p {
+  font-size: 1rem;
+  color: #0a0404;
+  top: 50%;
+  left: 20%;
+  position: absolute;
+  height: 40px;
+  border-radius: 4px;
+  max-width: 10%;
+}
+
+.container .own_today {
+  position: absolute;
+  max-width: 10%;
+  height: 40px;
+  border-radius: 4px;
+  top: 70%;
+  left: 20%;
+}
+
+/* Reviews and Upgrades Section */
+.reviews-upgrades {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  background-color: #fff;
+  margin: 20px;
+  font-family: "Roboto", sans-serif;
+}
+
+.reviews h3 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.reviews ul {
+  list-style: none;
+  padding: 0;
+}
+
+.reviews ul li {
+  margin-bottom: 5px;
+  padding: 5px;
+  background: #e9ecef;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.features h4 {
+  text-align: left;
+  padding-left: 20px;
+  align-items: center;
+}
+.features1 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  justify-items: left;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.features1 img {
+  max-width: 30%;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer Styles */
+footer {
+  background-color: #222;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: #222;
+}
+
+footer a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+footer a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .reviews-upgrades {
+    flex-direction: column;
+  }
+
+  .container .own_today {
+    position: static;
+    margin: 10px 0 0;
+  }
+}
