@@ -5,12 +5,6 @@
   box-sizing: border-box;
 }
 
-/******* Change Box Model ***************/
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
 
 /* General Reset */
 * {
