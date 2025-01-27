@@ -245,7 +245,6 @@ VALUES (
         10000,
         108247,
         'White',
-        5
     );
 
 --Task 4: Modify the "GM Hummer" record to read "a huge interior" rather than "small interiors"
