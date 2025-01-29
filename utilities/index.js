@@ -78,6 +78,20 @@ Util.buildClassificationGrid = async function (data) {
   return grid;
 };
 
+exports.buildVehicleDetailHtml = (vehicle) => {
+  const html = `
+    <h1>${vehicle.make} ${vehicle.model}</h1>
+    <img src="${vehicle.image}" alt="${vehicle.make} ${vehicle.model}">
+    <p>Year: ${vehicle.year}</p>
+    <p>Price: $${vehicle.price.toLocaleString()}</p>
+    <p>Mileage: ${vehicle.mileage.toLocaleString()}</p>
+    <p>Description: ${vehicle.description}</p>
+  `;
+  return html;
+};
+
+
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for

@@ -10,6 +10,17 @@ const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventory");
 
+app.set("view engine", "ejs")
+app.use(expressLayouts)
+app.set("layout", "./layouts/layout") // not at views root
+
+/* ***********************
+ * View Engine and Templates
+ *************************/
+app.set("view engine", "ejs");
+app.use(expressLayouts);
+app.set("layout", "./layouts/layout"); // not at views root
+
 /* ***********************
  * Routes
  *************************/
@@ -40,6 +51,11 @@ app.use(async (err, req, res, next) => {
   });
 });
 
+app.get('/favicon.ico', (req, res) => {
+  res.status(204).end();
+});
+
+
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
@@ -52,12 +68,6 @@ const host = process.env.HOST;
  * application. It is used to control the project.
  *******************************************/
 
-/* ***********************
- * View Engine and Templates
- *************************/
-app.set("view engine", "ejs");
-app.use(expressLayouts);
-app.set("layout", "./layouts/layout"); // not at views root
 
 /* ***********************
  * Log statement to confirm server operation

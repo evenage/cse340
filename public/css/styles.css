@@ -1,4 +1,4 @@
-/******* Change Box Model ***************/
+ /******* Change Box Model ***************/
 *,
 *:before,
 *:after {
@@ -21,12 +21,13 @@ html {
 
 body {
   background-image: url("/images/site/small_check.jpg");
-  background-repeat: repeat;
-  background-size: auto;
+  background-repeat: no-repeat;
+  background-size: center;
   background-position: center;
   background-color: #f4f4f4;
   padding: 20px;
-  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
   font-family: "Roboto", sans-serif;
 }
 
@@ -210,6 +211,107 @@ footer a:hover {
   color: #0056b3;
   text-decoration: underline;
 }
+
+.vehicle-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+/* Vehicle Detail Styles */
+.vehicle-detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.vehicle-detail img {
+  flex: 1 1 40%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.vehicle-info {
+  flex: 1 1 55%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.vehicle-info h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.vehicle-info p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.vehicle-info strong {
+  font-weight: bold;
+  color: #222;
+}
+
+.vehicle-info p:nth-child(2),
+.vehicle-info p:nth-child(3) {
+  font-size: 1.2rem;
+  color: #000;
+}
+
+/* Responsive Layouts */
+@media (max-width: 768px) {
+  .vehicle-detail {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .vehicle-info {
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  .vehicle-info h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .vehicle-info h1 {
+    font-size: 1.5rem;
+  }
+
+  .vehicle-info p {
+    font-size: 1rem;
+  }
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+footer a {
+  color: #4CAF50;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
