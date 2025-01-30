@@ -27,27 +27,23 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
-const getVehicleById = async (id) => {
-  const query = 'SELECT * FROM inventory WHERE id = $1';
-  const result = await db.query(query, [id]);
-  const vehicles = getAllVehicles();
-  return vehicles.find(vehicle => vehicle.id === parseInt(id));
+async function getInventoryById(inventory_id) {
+  try {
+    const data = await pool.query(
+      `SELECT * FROM public.inventory AS i
+       JOIN public.classification AS c 
+      ON i.classification_id = c.classification_id
+       WHERE i.inv_id = $1`,
+      [inventory_id]
+    );
+    return data.rows;
+  } catch (error) {
+    console.error("getInventorybyid error " + error);
+  }
+}
 
-  return result.rows[0];
+module.exports = {
+  getClassifications,
+  getInventoryByClassificationId,
+  getInventoryById,
 };
-
-const fs = require('fs');
-const path = require('path');
-
-// Path to the vehicle data file
-const filePath = path.join(__dirname, '../database/vehicle.json');
-
-// Read all vehicle data
-const getAllVehicles = () => {
-  const vehicles = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-  return vehicles;
-};
-
-
-
-module.exports = { getClassifications, getInventoryByClassificationId, getAllVehicles, getVehicleById };

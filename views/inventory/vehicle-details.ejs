@@ -1,31 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= vehicle.make %> <%= vehicle.model %> Details</title>
-  <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-  <header>
-    <h1>Vehicle Details</h1>
-  </header>
+<% if (title) { %>
+  <h1>
+      <%= title %>
+  </h1>
+  <% } else { res.redirect('/') } %>
 
-  <main class="vehicle-details">
-    <div class="vehicle-image">
-      <img src="<%= vehicle.imageFull %>" alt="<%= vehicle.make %> <%= vehicle.model %>">
-    </div>
-    <div class="vehicle-info">
-      <h2><%= vehicle.make %> <%= vehicle.model %></h2>
-      <p><strong>Year:</strong> <%= vehicle.year %></p>
-      <p><strong>Price:</strong> $<%= vehicle.price.toLocaleString() %></p>
-      <p><strong>Mileage:</strong> <%= vehicle.mileage.toLocaleString() %> miles</p>
-      <p><strong>Description:</strong> <%= vehicle.description %></p>
-    </div>
-  </main>
-
-  <footer></footer>
-  </footer>
-</body>
-</html>
-
+      <%# messages() %>
+          <%- grid %>

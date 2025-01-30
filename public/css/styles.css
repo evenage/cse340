@@ -1,10 +1,9 @@
- /******* Change Box Model ***************/
+/******* Change Box Model ***************/
 *,
 *:before,
 *:after {
   box-sizing: border-box;
 }
-
 
 /* General Reset */
 * {
@@ -218,53 +217,53 @@ footer a:hover {
   padding: 1rem;
 }
 
-/* Vehicle Detail Styles */
-.vehicle-detail {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+/* Styles for the inventory display grid */
+#inv-display {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(250px, 1fr)
+  ); /* Responsive grid layout */
+  gap: 16px; /* Spacing between grid items */
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove padding */
+  margin: 0 auto; /* Center the grid */
+  max-width: 1200px; /* Limit the overall width */
 }
 
-.vehicle-detail img {
-  flex: 1 1 40%;
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  object-fit: cover;
+/* Styles for each vehicle card */
+#inv-display li {
+  background: #f9f9f9; /* Light background for each card */
+  border: 1px solid #ddd; /* Subtle border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 16px; /* Spacing inside each card */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover animation */
 }
 
-.vehicle-info {
-  flex: 1 1 55%;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+#inv-display li:hover {
+  transform: translateY(-5px); /* Slight hover lift */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); /* More prominent shadow */
 }
 
-.vehicle-info h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+/* Styles for the content inside the card */
+#inv-display li span {
+  display: flex; /* Stack each span on a new line */
+  margin: 8px 0; /* Add vertical spacing between spans */
+  font-size: 1rem; /* Standard font size */
+  color: #0fa70a;
+  font-style: italic;
 }
 
-.vehicle-info p {
-  margin: 0.5rem 0;
-  font-size: 1.1rem;
-  color: #555;
-}
+/* Responsive styling */
+@media (max-width: 768px) {
+  #inv-display li {
+    padding: 12px; /* Reduce padding on smaller screens */
+  }
 
-.vehicle-info strong {
-  font-weight: bold;
-  color: #222;
-}
-
-.vehicle-info p:nth-child(2),
-.vehicle-info p:nth-child(3) {
-  font-size: 1.2rem;
-  color: #000;
+  #inv-display li span {
+    font-size: 0.9rem; /* Slightly smaller font for smaller screens */
+  }
 }
 
 /* Responsive Layouts */
@@ -303,7 +302,7 @@ footer {
   margin-top: 2rem;
 }
 footer a {
-  color: #4CAF50;
+  color: #4caf50;
   text-decoration: none;
   font-weight: bold;
 }
@@ -311,7 +310,6 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
-
 
 /* Responsive Design */
 @media (max-width: 768px) {
