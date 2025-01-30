@@ -318,7 +318,12 @@ footer a:hover {
   }
 
   .container .own_today {
-    position: static;
-    margin: 10px 0 0;
+      position: absolute;
+      max-width: 10%;
+      height: 40px;
+      border-radius: 4px;
+      top: 70%;
+      left: 20%;
+    }
   }
-}
+
