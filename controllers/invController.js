@@ -36,9 +36,6 @@ invCont.buildByClassificationId = async function (req, res, next) {
   }
 };
 
-const getVehicleDetail = (req, res, next) => {
-  const vehicleId = req.params.id; // Get the ID from the URL
-  const vehicle = inventoryModel.getVehicleById(vehicleId); // Fetch vehicle details from the model
 
   if (!vehicle) {
     // Handle vehicle not found
