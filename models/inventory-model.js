@@ -27,6 +27,11 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
+module.exports = {
+  getClassifications,
+  getInventoryByClassificationId,
+};
+
 async function getInventoryById(inventory_id) {
   try {
     const data = await pool.query(

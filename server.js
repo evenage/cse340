@@ -1,6 +1,8 @@
 /* ***********************
  * Require Statements
  *************************/
+const session = require("express-session");
+const pool = require("./database/");
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const utilities = require("./utilities/");
@@ -9,13 +11,16 @@ const app = express();
 const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
+const accountRoute = require("./routes/accountRoute");
+const bodyParser = require("body-parser");
 
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./lay");
 app.set("view engine", "ejs"); // not at views root
 app.use(express.static("public"));
-
+app.use("/inv", inventoryRoute);
+app.use("/account", accountRoute);
 
 /* ***********************
  * Middleware
@@ -32,6 +37,8 @@ app.use(
     name: "sessionId",
   })
 );
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 /* ***********************
  * View Engine and Templates
@@ -43,15 +50,22 @@ app.set("layout", "./layouts/layout"); // not at views root
 /* ***********************
  * Routes
  *************************/
-app.use(static);
-
+app.use(require("./routes/static"));
 //index route
 app.get("/", utilities.handleErrors(baseController.buildHome));
 // Inventory routes
-app.use("/inv", inventoryRoute);
+app.use("/inv", require("./routes/inventoryRoute"));
+// Account routes
+app.use("/account", require("./routes/accountRoute"));
 
-// File Not Found Route - must be last route in list
-
+/* ***********************
+ *File not found route - must be last route in list
+ *place after all other routes
+ *unit 3 activity
+ *************************/
+app.use(async (req, res, next) => {
+  next({ status: 404, message: "Sorry, we appear to have lost that page" });
+});
 
 /* ***********************
  * Express Error Handler

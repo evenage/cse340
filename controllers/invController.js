@@ -21,6 +21,8 @@ invCont.buildByClassificationId = async function (req, res, next) {
       });
     }
 
+    module.exports = invCont;
+
     const grid = await utilities.buildClassificationGrid(data);
     let nav = await utilities.getNav();
     const className = data[0].classification_name;

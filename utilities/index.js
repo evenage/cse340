@@ -1,10 +1,11 @@
 const invModel = require("../models/inventory-model");
-const Util = {};
+const Utils = {};
+
 
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
-Util.getNav = async function (req, res, next) {
+Utils.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications();
   //console.log(data);
   let list = "<ul>";
@@ -25,10 +26,12 @@ Util.getNav = async function (req, res, next) {
   return list;
 };
 
+module.exports = Utils;
+
 /* **************************************
  * Build the classification view HTML
  * ************************************ */
-Util.buildClassificationGrid = async function (data) {
+Utils.buildClassificationGrid = async function (data) {
   let grid;
   if (data.length > 0) {
     grid = '<ul id="inv-display">';
@@ -78,7 +81,7 @@ Util.buildClassificationGrid = async function (data) {
   return grid;
 };
 
-Util.buildInventoryGrid = async function (data) {
+Utils.buildInventoryGrid = async function (data) {
   let grid;
   if (data.length > 0) {
     grid = '<ul id="inv-display">';
@@ -118,12 +121,9 @@ Util.buildInventoryGrid = async function (data) {
         "<span>price:  $" +
         new Intl.NumberFormat("en-US").format(vehicle.inv_price) +
         "</span>";
-        grid +=
-        "<span>miles: " + vehicle.inv_miles + "</span>";
-        grid +=
-        "<span>description: " + vehicle.inv_description + "</span>";
-        grid +=
-        "<span>color: " + vehicle.inv_color + "</span>";
+      grid += "<span>miles: " + vehicle.inv_miles + "</span>";
+      grid += "<span>description: " + vehicle.inv_description + "</span>";
+      grid += "<span>color: " + vehicle.inv_color + "</span>";
       grid += "</div>";
       grid += "</li>";
     });
