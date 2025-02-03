@@ -10,10 +10,4 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 router.get("/detail/:inventoryId", invController.buildByInventoryId);
 
 
-
-// Default route for inventory
-router.get("/", (req, res) => {
-  res.send("Inventory Home");
-});
-
 module.exports = router;
