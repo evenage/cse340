@@ -46,7 +46,6 @@ async function registerAccount(req, res) {
     account_email,
     account_password
   );
-
   if (regResult) {
     req.flash(
       "notice",

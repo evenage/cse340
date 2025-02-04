@@ -25,10 +25,5 @@ router.get(
   utilities.handleErrors(accountController.buildRegister)
 );
 
-// route to process register account
-router.post(
-  "/register",
-  utilities.handleErrors(accountController.registerAccount)
-);
 
 (module.exports = router), accountController, utilities;
