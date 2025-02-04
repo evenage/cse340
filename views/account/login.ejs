@@ -5,29 +5,28 @@
     <% } else { res.redirect('/') } %>
 
         <%# messages() %>
-            <main>
-                <div class="text-center-div" id="login">
-                    <div class="container w-25 border py-5">
-                        <div class="title pb-5">
-                            <h2 class="font-weight-bold"></h2>
-                            <span>Log in here</span>
-                        </div>
-                        <div class="form-group">
-                            <form action="account/login" method="POST">
-                                <label for="account_email">Email:</label>
-                                <input type="email" class="form-control" id="email" required placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
+            <% if (error) { %>
+                <ul class="notice">
+                    <% error.array().forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+                    <main>
+                        <form action="/account/login" method="post">
+                            <label for="account_email">Email Address:</label>
+                            <input type="email" id="accountemail" name="account_email" required
+                                value="<%=locals.account_email%>">
                             <label for="account_password">Password:</label>
-                            <input type="password" class="form-control" id="password" required
-                                placeholder="Enter password"
+                            <input type="password" id="accountpassword" name="account_password" required
+                                data-trail="password"
                                 pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$">
                             <button type="button" id="toggle-password">Show Password</button><br><br>
-                            <span>Note: All fields are required. Password must be at
-                                least 12 characters long, contain at least 1 capital
-                                letter, 1 number, and 1 special character.</span>
-                            <button type="submit" class="btn btn-success rounded-pill">Submit</button>
-                            </form>
-                        </div>
+                            <span>Note: All fields are required. Password must be at least 12 characters long, contain
+                                at least 1 capital letter, 1 number, and 1 special character.</span>
+                            <button type="submit">Login</button>
+                        </form>
                         <p>No account? <a href="/account/register">Sign Up</a></p>
-            </main>
+                    </main>
