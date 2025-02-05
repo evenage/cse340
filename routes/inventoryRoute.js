@@ -12,20 +12,20 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 router.get("/detail/:inventoryId", invController.buildByInventoryId);
 
 // route to management view
-router.get("/management", inventoryController.getManagementView);
+router.get("/management", invController.getManagementView);
 
 // route to add-inventory view
-router.get("/add-inventory", inventoryController.getAddInventoryView);
+router.get("/add-inventory", invController.getAddInventoryView);
 
 // route to add-classification view
-router.get("/add-classification", inventoryController.getAddClassificationView);
+router.get("/add-classification", invController.getAddClassificationView);
 
 // Process inventory data
 router.post(
   "/add-inventory",
   regValidate.inventoryRules(),
   regValidate.checkInventoryData,
-  utilities.handleErrors(inventoryController.addInventory)
+  utilities.handleErrors(invController.addInventory)
 );
 
 // Process the add classification data
@@ -33,7 +33,7 @@ router.post(
   "/add-classification",
   regValidate.classificationRules(),
   regValidate.checkClassificationData,
-  utilities.handleErrors(inventoryController.addClassification)
+  utilities.handleErrors(invController.addClassification)
 );
 
 module.exports = router;

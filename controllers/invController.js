@@ -62,39 +62,29 @@ invCont.buildByInventoryId = async function (req, res, next) {
 /* ****************************************
  * management view
  *************************************** */
-async function getManagementView (req, res)  {
-  res.render("inventory/management", {
-    title: "Inventory Management",
-    message: req.flash("message"),
+invCont.getManagementView = async function (req, res, next)  {
+  let nav = await utilities.getNav()
+  res.render("./inventory/management", {
+    title: "Vehicle Management",
     nav,
   });
 };
 
-/* ****************************************
- * Deliver add classification view
- *************************************** */
-async function getAddClassificationView(req, res, next) {
-  let nav = await utilities.getNav();
-  res.render("inventory/add-classification", {
-    title: "Add Classification",
-    nav,
-    errors: null,
-  });
-}
 
-/* ****************************************
- * Deliver add inventory view
- *************************************** */
-async function getAddInventoryView(req, res, next) {
+
+ /* ****************************************
+  * Deliver add inventory view
+/  *************************************** */
+ async function getAddInventoryView(req, res, next) {
   let nav = await utilities.getNav();
   const classificationList = await utilities.buildClassificationList();
-  res.render("inventory/add-inventory", {
+   res.render("inventory/add-inventory", {
     title: "Add Inventory",
     nav,
     classificationList,
     errors: null,
   });
-}
+ }
 
 /* ****************************************
  * Process add classification
@@ -150,13 +140,9 @@ async function addInventory(req, res) {
       title: "Add Inventory",
       nav,
       classificationList,
-      errors:
-        "Failed to add inventory. Please check your inputs and try again.",
+      errors     // "Failed to add inventory. Please check your inputs and try again.",
     });
   }
 }
 
-module.exports = {
-  addClassification,
-  addInventory,
-};
+module.exports = { };
