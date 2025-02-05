@@ -67,7 +67,6 @@ async function getManagementView (req, res)  {
     title: "Inventory Management",
     message: req.flash("message"),
     nav,
-    errors: null,
   });
 };
 
@@ -158,9 +157,6 @@ async function addInventory(req, res) {
 }
 
 module.exports = {
-  buildManagement,
-  buildAddClassification,
-  buildAddInventoryView,
   addClassification,
   addInventory,
 };
