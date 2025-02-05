@@ -14,13 +14,12 @@ const inventoryRoute = require("./routes/inventoryRoute");
 const accountRoute = require("./routes/accountRoute");
 const bodyParser = require("body-parser");
 
+/* ***********************
+ * View Engine and Templates
+ *************************/
 app.set("view engine", "ejs");
 app.use(expressLayouts);
-app.set("layout", "./lay");
-app.set("view engine", "ejs"); // not at views root
-app.use(express.static("public"));
-app.use("/inv", inventoryRoute);
-app.use("/account", accountRoute);
+app.set("layout", "./layouts/layout"); // not at views root
 
 /* ***********************
  * Middleware
@@ -39,7 +38,6 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
 
 /* ***********************
  * Routes

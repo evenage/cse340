@@ -1,0 +1,28 @@
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } %>
+
+        <!-- Flash messages -->
+        <%= messages() %>
+
+            <!-- Display validation errors if present -->
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+
+                    <!-- Classification Form -->
+                    <form action="/inv/add-classification" method="POST" id="classificationForm">
+                        <label for="classification_name">Classification Name:</label>
+                        <input type="text" id="classification_name" name="classification_name" pattern="^[a-zA-Z0-9]+$"
+                            required>
+                        <small>No spaces or special characters allowed.</small>
+                        <button type="submit">Add Classification</button>
+                    </form>

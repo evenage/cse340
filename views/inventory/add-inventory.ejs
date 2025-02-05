@@ -1,0 +1,70 @@
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } %>
+
+        <!-- Flash messages -->
+        <%= messages() %>
+
+            <!-- Display validation errors if present -->
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+
+                    <!-- Add Vehicle Form -->
+                    <form action="/inv/add-vehicle" method="POST" id="addVehicleForm">
+                        <label for="classification_id">Classification:</label>
+                        <%= classificationList %>
+
+                            <label for="inv_make">Make:</label>
+                            <input type="text" name="inv_make" id="inv_make" value="<%= inv_make || '' %>" required>
+
+                            <label for="inv_model">Model:</label>
+                            <input type="text" name="inv_model" id="inv_model" value="<%= inv_model || '' %>" required>
+
+                            <label for="inv_price">Price:</label>
+                            <input type="number" name="inv_price" id="inv_price" step="0.01"
+                                value="<%= inv_price || '' %>" required>
+
+                            <label for="inv_year">Year:</label>
+                            <input type="number" name="inv_year" id="inv_year" min="1900" max="2099"
+                                value="<%= inv_year || '' %>" required>
+
+                            <label for="inv_miles">Miles:</label>
+                            <input type="number" name="inv_miles" id="inv_miles" value="<%= inv_miles || '' %>"
+                                required>
+
+                            <label for="inv_color">Color:</label>
+                            <input type="text" name="inv_color" id="inv_color" value="<%= inv_color || '' %>" required>
+
+                            <label for="inv_image">Vehicle Image Path:</label>
+                            <input type="text" name="inv_image" id="inv_image" value="/images/vehicles/no-image.png"
+                                required>
+
+                            <label for="inv_thumbnail">Thumbnail Image Path:</label>
+                            <input type="text" name="inv_thumbnail" id="inv_thumbnail"
+                                value="/images/vehicles/no-image-tn.png" required>
+
+                            <button type="submit">Add Vehicle</button>
+                    </form>
+
+                    <!-- Client-side Validation Script -->
+                    <script>
+                        document.getElementById('addVehicleForm').addEventListener('submit', function (event) {
+                            let inputs = this.querySelectorAll('input[required]');
+                            for (let input of inputs) {
+                                if (!input.value.trim()) {
+                                    alert('All fields are required!');
+                                    event.preventDefault();
+                                    return;
+                                }
+                            }
+                        });
+                    </script>
