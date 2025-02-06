@@ -120,4 +120,7 @@ module.exports = {
   addInventoryItem,
   updateClassification,
   updateInventoryItem,
+  getClassifications,
+  getInventoryByClassificationId,
+  getInventoryById,
 };

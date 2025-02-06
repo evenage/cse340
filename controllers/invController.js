@@ -60,34 +60,67 @@ invCont.buildByInventoryId = async function (req, res, next) {
 /* ****************************************
  * management view
  *************************************** */
-invCont.getManagementView = async function (req, res, next)  {
-  let nav = await utilities.getNav()
+invCont.getManagementView = async function (req, res, next) {
+  let nav = await utilities.getNav();
   res.render("./inventory/management", {
     title: "Vehicle Management",
     nav,
+    errors: null,
   });
 };
 
-
-
- /* ****************************************
+/* ****************************************
   * Deliver add inventory view
 /  *************************************** */
- async function getAddInventoryView(req, res, next) {
-  let nav = await utilities.getNav();
-  const classificationList = await utilities.buildClassificationList();
-   res.render("inventory/add-inventory", {
-    title: "Add Inventory",
-    nav,
-    classificationList,
-    errors: null,
-  });
- }
+invCont.getAddInventoryView = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav();
+    const classificationList = await utilities.buildClassificationList();
+    res.render("inventory/add-inventory", {
+      title: "Add Inventory",
+      nav,
+      classificationList,
+      errors,
+    });
+  } catch (error) {
+    console.error("Errors loading add classification view:", error);
+    res.render("inventory/add-classification", {
+      title: "Add Classification",
+      nav: null,
+      classifications: [],
+      errors: [{ msg: "Failed to load data. Please try again later." }],
+    });
+  }
+};
 
 /* ****************************************
+ * Deliver add classification view
+ ********************************* */
+invCont.getAddClassificationView = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav();
+    const classificationList = await utilities.buildClassificationList();
+    res.render("inventory/add-classification", {
+      title: "Add classification",
+      nav,
+      classificationList,
+      errors,
+    });
+  } catch (error) {
+    console.error("Errors loading add classification view:", error);
+    res.render("inventory/add-classification", {
+      title: "Add Classification",
+      nav: null,
+      classifications: [],
+      errors: [{ msg: "Failed to load data. Please try again later." }],
+    });
+  }
+};
+
+/****************************************
  * Process add classification
  *************************************** */
-async function addClassification(req, res) {
+invCont.addClassification = async function (req, res) {
   let nav = await utilities.getNav();
   const { classification_name } = req.body;
   const classificationResult = await inventoryModel.addClassification(
@@ -106,12 +139,12 @@ async function addClassification(req, res) {
       errors: "Failed to add classification. Please try again.",
     });
   }
-}
+};
 
 /* ****************************************
  * Process add inventory
  *************************************** */
-async function addInventory(req, res) {
+invCont.addInventory = async function (req, res) {
   let nav = await utilities.getNav();
   const { inv_make, inv_model, inv_year, classification_id } = req.body;
   const inventoryResult = await inventoryModel.addInventory(
@@ -138,7 +171,9 @@ async function addInventory(req, res) {
       title: "Add Inventory",
       nav,
       classificationList,
-      errors     // "Failed to add inventory. Please check your inputs and try again.",
+      errors, // "Failed to add inventory. Please check your inputs and try again.",
     });
   }
-}
+};
+
+module.exports = invCont;

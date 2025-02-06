@@ -1,25 +1,19 @@
 <% if (title) { %>
-    <h1><%= title %></h1>
-<% } %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
 
-<!-- Flash messages -->
-<%= messages() %>
-
-<!-- Display validation errors if present -->
-<% if (errors && errors.length > 0) { %>
-    <ul class="notice">
-        <% errors.forEach(error => { %>
-            <li><%= error.msg %></li>
-        <% }) %>
-    </ul>
-<% } %>
-
-<!-- Flash message -->
-<% if (message) { %>
-    <p class="flash-message"><%= message %></p>
-<% } %>
-
-<ul>
-    <li><a href="/inv/add-classification">Add New Classification</a></li>
-    <li><a href="/inv/add-vehicle">Add New Vehicle</a></li>
-</ul>
+        <%# messages() %>
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.array().forEach(errors=> { %>
+                        <li>
+                            <%= errors.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% }%>
+                    <li><a href="/inv/add-classification">Add New Classification</a></li>
+                    <li><a href="/inv/add-vehicle">Add New Vehicle</a></li>
+                    </ul>

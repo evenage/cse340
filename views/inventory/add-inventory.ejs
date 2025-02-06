@@ -2,12 +2,9 @@
     <h1>
         <%= title %>
     </h1>
-    <% } %>
+    <% } else { res.redirect('/') } %>
 
-        <!-- Flash messages -->
-        <%= messages() %>
-
-            <!-- Display validation errors if present -->
+        <%# messages() %>
             <% if (errors) { %>
                 <ul class="notice">
                     <% errors.forEach(error=> { %>
@@ -16,7 +13,8 @@
                         </li>
                         <% }) %>
                 </ul>
-                <% } %>
+                <% }%>
+
 
                     <!-- Add Vehicle Form -->
                     <form action="/inv/add-vehicle" method="POST" id="addVehicleForm">

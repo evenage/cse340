@@ -11,6 +11,12 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 // Route to view inventory by classification
 router.get("/detail/:inventoryId", invController.buildByInventoryId);
 
+// Route to view inventory by classification
+router.get("/type/:classificationId", invController.buildByClassificationId);
+
+// Route to view inventory by classification
+router.get("/detail/:inventoryId", invController.buildByInventoryId);
+
 // route to management view
 router.get("/management", invController.getManagementView);
 
