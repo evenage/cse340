@@ -27,11 +27,6 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
-module.exports = {
-  getClassifications,
-  getInventoryByClassificationId,
-};
-
 async function getInventoryById(inventory_id) {
   try {
     const data = await pool.query(
@@ -46,12 +41,6 @@ async function getInventoryById(inventory_id) {
     console.error("getInventorybyid error " + error);
   }
 }
-
-module.exports = {
-  getClassifications,
-  getInventoryByClassificationId,
-  getInventoryById,
-};
 
 /* ***************************
  * Add new classification
