@@ -1,6 +1,6 @@
-/* ********************************* 
- * Account routes 
- * deliver login view activity 
+/* *********************************
+ * Account routes
+ * deliver login view activity
  ********************************** */
 const express = require("express");
 const router = new express.Router();
@@ -12,7 +12,19 @@ const regValidate = require("../utilities/account-validation");
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
 
 // route to Deliver register view
-router.get("/register", utilities.handleErrors(accountController.buildRegister));
+router.get(
+  "/register",
+  utilities.handleErrors(accountController.buildRegister)
+);
+
+// route to account management view
+//router.get("/accountManagement", accountController.buildAccountManagementView);
+
+router.get(
+  "/",
+  utilities.checkLogin,
+  accountController.buildAccountManagementView
+);
 
 // Process the registration data
 router.post(
@@ -27,7 +39,7 @@ router.post(
   "/login",
   regValidate.loginRules(),
   regValidate.checkLoginData,
-  utilities.handleErrors(accountController.loginAccount)
+  utilities.handleErrors(accountController.accountLogin)
 );
 
 module.exports = router;

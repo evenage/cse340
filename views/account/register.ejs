@@ -18,33 +18,44 @@
                     <main>
                         <form action="/account/register" method="post">
                             <label for="account_firstname">First Name:</label>
-                            <input type="text" id="accountFirstname" name="account_firstname" required value="<%=locals.account_firstname%>">
+                            <input type="text" id="accountFirstname" name="account_firstname" required
+                                value="<%=locals.account_firstname%>">
                             <label for="account_lastname">Last Name:</label>
-                            <input type="text" id="accountlastname" name="lastname" required value="<%=locals.account_lastname%>">
+                            <input type="text" id="accountLastname" name="lastname" required
+                                value="<%=locals.account_lastname%>">
                             <label for="account_email">Email Address:</label>
-                            <input type="email" id="accountemail" required value="<%=locals.account_email%>">
+                            <input type="email" id="accountEmail" required value="<%=locals.account_email%>">
                             <label for="account_password">Password:</label>
-                            <input type="password" id="accountpassword" name="password" required data-trail="password"
+                            <input type="password" id="accountPassword" name="password" required data-trail="password"
                                 pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$">
-                            <button type="button" id="toggle-password">Show Password</button><br><br>
+                            <button id="show-password" onclick="togglePassword">Show Password</button><br><br>
                             <span>Note: All fields are required. Password must be at
                                 least 12 characters long, contain at least 1 capital
                                 letter, 1 number, and 1 special character.</span>
                             <button type="submit">Register</button>
                         </form>
 
-                        <script>
-                            const passwordInput = document.getElementById('password');
-                            const togglePasswordButton = document.getElementById('toggle-password');
+                        <script>function togglePassword() {
+                                var passwordInput = document.getElementById("password");
+                                var showPasswordButton = document.getElementById("show-password");
 
-                            togglePasswordButton.addEventListener('click', () => {
-                                if (passwordInput.type === 'password') {
-                                    passwordInput.type = 'text';
-                                    togglePasswordButton.textContent = 'Hide Password';
+                                if (passwordInput.type === "password") {
+                                    passwordInput.type = "text";
+                                    showPasswordButton.textContent = "Hide Password";
+                                    showPasswordButton.classList.add("hide-password");
+                                    showPasswordButton.onclick = function () {
+                                        passwordInput.type = "password";
+                                        showPasswordButton.innerHTML = "Show Password";
+                                        showPasswordButton.className = "";
+                                        showPasswordButton.onclick = togglePassword;
+                                    };
+
                                 } else {
-                                    passwordInput.type = 'password';
-                                    togglePasswordButton.textContent = 'Show Password';
+                                    passwordInput.type = "password";
+                                    showPasswordButton.textContent = "Show Password";
+                                    showPasswordButton.classList.remove("hide-password");
                                 }
-                            });
+                            }
+
                         </script>
                     </main>

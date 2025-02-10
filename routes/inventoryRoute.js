@@ -20,6 +20,16 @@ router.get("/detail/:inventoryId", invController.buildByInventoryId);
 // route to management view
 router.get("/management", invController.getManagementView);
 
+/* *************************************
+ *Get inventory for ajax route
+ *unit 5 select in items activity
+ ****************************************/
+router.get(
+  "/getInventory/:classification_id",
+  utilities.checkAccountType,
+  utilities.handleErrors(invController.getInventoryJSON)
+);
+
 // route to add-inventory view
 router.get("/add-inventory", invController.getAddInventoryView);
 

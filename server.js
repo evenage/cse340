@@ -13,6 +13,7 @@ const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const accountRoute = require("./routes/accountRoute");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 /* ***********************
  * View Engine and Templates
@@ -20,6 +21,8 @@ const bodyParser = require("body-parser");
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout"); // not at views root
+app.use(express.static("public"));
+app.use(cookieParser());
 
 /* ***********************
  * Middleware
@@ -38,6 +41,7 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(utilities.checkJWTToken)
 
 //Express Massages Middleware
 app.use(require("connect-flash")());
@@ -45,6 +49,7 @@ app.use(function (req, res, next) {
   res.locals.messages = require("express-messages")(req, res);
   next();
 });
+app.use(cookieParser());
 
 /* ***********************
  * Routes
