@@ -66,7 +66,7 @@ router.post(
 
 // Route to handle the edit inventory item request
 router.get("/edit/:inv_id",
-  utilities.handleErrors(invController.editInventoryItem));
+  utilities.handleErrors(invController.editInventoryView));
 
 
 
