@@ -27,8 +27,6 @@ Utils.getNav = async function (req, res, next) {
   return list;
 };
 
-module.exports = Utils;
-
 /* **************************************
  * Build the classification view HTML
  * ************************************ */
