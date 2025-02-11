@@ -21,12 +21,14 @@
                             <input type="text" id="accountFirstname" name="account_firstname" required
                                 value="<%=locals.account_firstname%>">
                             <label for="account_lastname">Last Name:</label>
-                            <input type="text" id="accountLastname" name="lastname" required
+                            <input type="text" id="accountLastname" name="account_lastname" required
                                 value="<%=locals.account_lastname%>">
                             <label for="account_email">Email Address:</label>
-                            <input type="email" id="accountEmail" required value="<%=locals.account_email%>">
+                            <input type="email" id="accountEmail" name="account_email" required
+                                value="<%=locals.account_email%>">
                             <label for="account_password">Password:</label>
-                            <input type="password" id="accountPassword" name="password" required data-trail="password"
+                            <input type="password" id="accountPassword" name="account_firstname" required
+                                data-trail="password"
                                 pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$">
                             <button id="show-password" onclick="togglePassword">Show Password</button><br><br>
                             <span>Note: All fields are required. Password must be at

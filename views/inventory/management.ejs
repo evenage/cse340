@@ -7,21 +7,21 @@
         <%# messages() %>
             <% if (errors) { %>
                 <ul class="notice">
-                    <% errors.array().forEach(errors=> { %>
+                    <% errors.forEach(error=> { %>
                         <li>
-                            <%= errors.msg %>
+                            <%= error.msg %>
                         </li>
                         <% }) %>
                 </ul>
                 <% }%>
                     <li><a href="/inv/add-classification/" title="Click to add a new vehicle classification">Add New
                             Classification</a></li>
-                    <li><a href="/inv/add-vehicle/" title="Click to add a new vehicle">Add New Vehicle</a></li>
+                    <li><a href="/inv/add-inventory/" title="Click to add a new vehicle">Add New Vehicle</a></li>
                     </ul>
 
                     <h2>Manage Inventory</h2>
                     <p>Choose a classification to see those inventory items</p>
-                    <%- classification %>
+                    <%- classificationSelect %>
 
                         <table id="inventoryDisplay"></table>
                         <noscript>JavaScript must be enable to use this page.</noscript>

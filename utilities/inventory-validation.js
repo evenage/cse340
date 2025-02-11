@@ -98,4 +98,30 @@ validate.checkInventoryData = async (req, res, next) => {
   next();
 };
 
+/* ******************************
+ * Check inventory data and return errors to be directed back to edit view
+ ***************************** */
+validate.checkUpdateData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    const classificationList = await utilities.buildClassificationList(
+      req.body.classification_id
+    ); // Ensure sticky classification selection
+    res.render("inventory/edit-inventory", {
+      errors: errors.array(), // Extract error messages
+      title: "Edit" + itemName,
+      nav,
+      inv_id: req.body.inv_id,
+      inv_make: req.body.inv_make,
+      inv_model: req.body.inv_model,
+      inv_year: req.body.inv_year,
+      classification_id: req.body.classification_id, // Sticky selection
+      classificationList,
+    });
+    return;
+  }
+  next();
+};
+
 module.exports = validate;

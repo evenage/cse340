@@ -20,13 +20,24 @@ router.get("/detail/:inventoryId", invController.buildByInventoryId);
 // route to management view
 router.get("/management", invController.getManagementView);
 
+//route to update inventory
+router.get("/update/", invController.UpdateInventory);
+
+// //route to update inventory
+ router.post(
+  "/update-inventory",
+  regValidate.inventoryRules(),
+  regValidate.checkUpdateData,
+ utilities.handleErrors(invController.updateInventory)
+  );
+
 /* *************************************
  *Get inventory for ajax route
  *unit 5 select in items activity
  ****************************************/
 router.get(
   "/getInventory/:classification_id",
-  utilities.checkAccountType,
+  //utilities.checkAccountType,
   utilities.handleErrors(invController.getInventoryJSON)
 );
 
@@ -51,5 +62,12 @@ router.post(
   regValidate.checkClassificationData,
   utilities.handleErrors(invController.addClassification)
 );
+
+
+// Route to handle the edit inventory item request
+router.get("/edit/:inv_id",
+  utilities.handleErrors(invController.editInventoryItem));
+
+
 
 module.exports = router;
