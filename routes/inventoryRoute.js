@@ -5,7 +5,6 @@ const invController = require("../controllers/invController");
 const utilities = require("../utilities/");
 const regValidate = require("../utilities/inventory-validation");
 
-
 // Route to view inventory by classification
 router.get("/type/:classificationId", invController.buildByClassificationId);
 
@@ -40,7 +39,7 @@ router.get("/add-classification", invController.getAddClassificationView);
 // Process inventory data
 router.post(
   "/add-inventory",
-  regValidate.inventoryRules(),
+  regValidate.newInventoryRules(),
   regValidate.checkInventoryData,
   utilities.handleErrors(invController.addInventory)
 );
@@ -53,20 +52,18 @@ router.post(
   utilities.handleErrors(invController.addClassification)
 );
 
-
 // Route to handle the edit inventory item request
-router.get("/edit/:inv_id",
-  utilities.handleErrors(invController.editInventoryView));
+router.get(
+  "/edit/:inv_id",
+  utilities.handleErrors(invController.editInventoryView)
+);
 
 // Route to handle the update inventory request
-router.post("/update/", 
+router.post(
+  "/update/",
   regValidate.newInventoryRules(),
-  regValidate.checkUpdateData, 
-  utilities.handleErrors(invController.updateInventory));
-
-
-
-
-
+  regValidate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+);
 
 module.exports = router;
