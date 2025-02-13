@@ -38,40 +38,6 @@ validate.checkClassificationData = async (req, res, next) => {
   next();
 };
 
-/* **********************************
- * Inventory Data Validation Rules
- ********************************* */
-validate.inventoryRules = () => {
-  return [
-    // make is required and must be string
-    body("inv_make")
-      .trim()
-      .escape()
-      .notEmpty()
-      .withMessage("Please provide a make."),
-    // model is required and must be string
-    body("inv_model")
-      .trim()
-      .escape()
-      .notEmpty()
-      .withMessage("Please provide a model."),
-    // year is required and must be number
-    body("inv_year")
-      .trim()
-      .escape()
-      .notEmpty()
-      .isInt({ min: 1900, max: new Date().getFullYear() })
-      .withMessage("Please provide a year."),
-    // classification id is required and must be number
-    body("classification_id")
-      .trim()
-      .escape()
-      .notEmpty()
-      .withMessage("Please select a classification.")
-      .isInt()
-      .withMessage("Invalid classification ID."),
-  ];
-};
 
 /* ******************************
  * Check inventory data and return errors or continue to add inventory
