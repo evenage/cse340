@@ -214,15 +214,8 @@ Utils.buildClassificationSelect = async function (classification_id = null) {
     '<select name="classification_id" id="classificationList" required>'
   classificationSelect += "<option value=''>Choose a Classification</option>"
   data.rows.forEach((row) => {
-    classificationSelect += '<option value="' + row.classification_id + '"'
-    if (
-      classification_id != null &&
-      row.classification_id == classification_id
-    ) {
-      classificationSelect += " selected "
-    }
-    classificationSelect += ">" + row.classification_name + "</option>"
-  })
+    classificationSelect += `<option value="${row.classification_id}"${classification_id != null && row.classification_id == classification_id ? ' selected' : ''}>${row.classification_name}</option>`
+})
   classificationSelect += "</select>"
   return classificationSelect
 }

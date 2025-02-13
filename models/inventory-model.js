@@ -161,5 +161,5 @@ module.exports = {
   getClassifications,
   getInventoryByClassificationId,
   getInventoryById,
-  updateInventory
+  updateInventory,
 };
