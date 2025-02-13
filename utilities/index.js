@@ -208,4 +208,23 @@ Utils.buildClassificationList = async function (classification_id = null) {
   return classificationList
 }
 
+Utils.buildClassificationSelect = async function (classification_id = null) {
+  let data = await invModel.getClassifications()
+  let classificationSelect =
+    '<select name="classification_id" id="classificationList" required>'
+  classificationSelect += "<option value=''>Choose a Classification</option>"
+  data.rows.forEach((row) => {
+    classificationSelect += '<option value="' + row.classification_id + '"'
+    if (
+      classification_id != null &&
+      row.classification_id == classification_id
+    ) {
+      classificationSelect += " selected "
+    }
+    classificationSelect += ">" + row.classification_name + "</option>"
+  })
+  classificationSelect += "</select>"
+  return classificationSelect
+}
+
 module.exports = Utils;

@@ -241,13 +241,7 @@ invCont.UpdateInventory = async function (req, res, next) {
     inv_id,
     inv_make,
     inv_model,
-    inv_description,
-    inv_image,
-    inv_thumbnail,
-    inv_price,
     inv_year,
-    inv_miles,
-    inv_color,
     classification_id
 } = req.body
 

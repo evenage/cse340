@@ -20,17 +20,6 @@ router.get("/detail/:inventoryId", invController.buildByInventoryId);
 // route to management view
 router.get("/management", invController.getManagementView);
 
-//route to update inventory
-router.get("/update/", invController.UpdateInventory);
-
-// //route to update inventory
- router.post(
-  "/update-inventory",
-  regValidate.inventoryRules(),
-  regValidate.checkUpdateData,
- utilities.handleErrors(invController.updateInventory)
-  );
-
 /* *************************************
  *Get inventory for ajax route
  *unit 5 select in items activity
