@@ -81,7 +81,6 @@ validate.checkRegData = async (req, res, next) => {
     const { account_firstname, account_lastname, account_email } = req.body;
     // ...
   };
-  
 };
 
 /* **********************************
