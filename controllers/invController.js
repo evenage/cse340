@@ -286,7 +286,7 @@ invCont.updateInventory = async function (req, res, next) {
   if (updateResult) {
     const itemName = updateResult.inv_make + " " + updateResult.inv_model;
     req.flash("notice", `The ${itemName} was successfully updated.`);
-    res.redirect("/inv/");
+    res.redirect("/inv/management");
   } else {
     const classificationSelect = await utilities.buildClassificationList(
       classification_id

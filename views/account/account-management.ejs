@@ -14,5 +14,19 @@
                         <% }) %>
                 </ul>
                 <% }%>
+                    <li><a href="/account/account-management">Welcome Basic</a></li>
                     <li><a href="/account/account-management">You're logged in</a></li>
                     </ul>
+
+                    <main>
+
+                        <% if(accountData.account_type !="Client" ){ %>
+                            <h3>Inventory Management</h3>
+                            <p><a href="/inv/">Manage Inventory</a></p>
+                            <% } %>
+                                <p><a href="/account/update/<%= accountData.account_id %>">Edit Account Information</a>
+                                </p>
+                                <p><a href="/account/logout" class="btn btn-danger">Logout</a></li>
+                                </p>
+
+                    </main>

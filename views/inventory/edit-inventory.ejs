@@ -104,8 +104,6 @@
                                                                                                         <%= locals.inv_id
                                                                                                             %>" <% } %>>
 
-                                                                                                            <label for="classificationList">Classification:</label> <%- classificationSelect %>
-
 
 
 
@@ -117,15 +115,4 @@
                     </form>
 
                     <!-- Client-side Validation Script -->
-                    <script src="../../js/inv-update.js"></script>>
-                    <script> document.getElementById('addVehicleForm').addEventListener('submit', function (event) {
-                            let inputs = this.querySelectorAll('input[required]');
-                            for (let input of inputs) {
-                                if (!input.value.trim()) {
-                                    alert('All fields are required!');
-                                    event.preventDefault();
-                                    return;
-                                }
-                            }
-                        });
-                    </script>
+                    <script src="../../js/inv-update.js"></script>

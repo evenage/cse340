@@ -51,4 +51,64 @@ async function getAccountByEmail(account_email) {
   }
 }
 
-module.exports = { registerAccount, checkExistingEmail, getAccountByEmail };
+/***************************
+ * week 5 updates account
+ *
+ * ****************************/
+async function updateAccount(
+  account_id,
+  account_firstname,
+  account_lastname,
+  account_email
+) {
+  try {
+    const data = await pool.query(
+      `UPDATE accounts SET first_name = ?, last_name = ?, email = ? WHERE account_id = ?`,
+      [account_firstname, account_lastname, account_email, account_id]
+    );
+    return data.rows[0];
+  } catch (error) {
+    console.error("updateAccount error " + error);
+    return null;
+  }
+}
+
+/***************************
+ * update password
+ *
+ **************************/
+async function updatePassword(account_id, hashedPassword) {
+  try {
+    await pool.execute(
+      `UPDATE accounts SET password = ? WHERE account_id = ?`,
+      [hashedPassword, account_id]
+    );
+    return data.rows[0];
+  } catch (error) {
+    console.error("updatePassword error " + error);
+    return null;
+  }
+}
+
+// Function to query account information
+const getAccountView= (account_id, callback) => {
+  const query = 'SELECT * FROM accounts WHERE account_id = $1';
+  const values = [account_id];
+  db.query(query, values, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+};
+
+
+module.exports = {
+  registerAccount,
+  checkExistingEmail,
+  getAccountByEmail,
+  updateAccount,
+  updatePassword,
+  getAccountView
+};

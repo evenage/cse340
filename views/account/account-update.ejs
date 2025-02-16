@@ -1,0 +1,79 @@
+<% if (title) {%>
+    <h1>
+        <%= title %>
+    </h1>
+    <%} else {res.redirect('/')} %>
+
+        <%- messages() %>
+
+            <% if (errors) { %>
+                <ul class="message warning">
+                    <% errors.array().forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+                    <main>
+
+                        <form action="/account/update" method="POST">
+                            <h2>Account Update</h2>
+
+                            <label for="account_firstname">First Name:</label>
+                            <input type="text" id="account_firstname" name="account_firstname"
+                                value="<%= user.account_firstname %>" required>
+
+                            <label for="account_lastname">Last Name:</label>
+                            <input type="text" id="accountlastname" name="account_lastname"
+                                value="<%= user.account_lastname %>" required>
+
+                            <label for="acoount_email">Email:</label>
+                            <input type="email" id="accountemail" name="account_email" value="<%= user.account_email %>"
+                                required>
+
+                            <input type="hidden" name="account_id" value="<%= user.account_id %>">
+
+                            <button type="submit">Update Account</button>
+                        </form>
+
+                        <!-- Change Password Form -->
+                        <form action="/account/update-password" method="POST">
+                            <h2>Change Password</h2>
+
+                            <label for="new_password">New Password:</label>
+                            <input type="password" id="new_password" name="new_password" required>
+
+                            <p>Password must be at least 8 characters long.</p>
+
+                            <input type="hidden" name="account_id" <% if(locals.account_id) {%> value=" <%=
+                                locals.account_id %>" <% } %>>
+
+                                    <button type="submit">Change Password</button>
+                        </form>
+                        // Add event listener to the form submission
+                        <script> document.addEventListener('submit', (e) => {
+                                // Prevent default form submission
+                                e.preventDefault();
+
+                                // Get the form elements
+                                const firstName = document.getElementById('account_firstname');
+                                const lastName = document.getElementById('account_lastname');
+                                const email = document.getElementById('account_email');
+                                const newPassword = document.getElementById('new_password');
+                                const confirmPassword = document.getElementById('confirm_password');
+
+                                // Check if the input fields are valid
+                                if (firstName.value === '' || lastName.value === '' || email.value === '') {
+                                    alert('Please fill in all the fields');
+                                    return;
+                                }
+                                if (newPassword.value !== confirmPassword.value) {
+                                    alert('Passwords do not match');
+                                    return;
+                                }
+
+                                // Submit the form
+                                document.getElementById('account-update-form').submit();
+                            });
+                        </script>
