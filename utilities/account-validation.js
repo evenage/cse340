@@ -31,12 +31,10 @@ validate.registationRules = () => {
       .normalizeEmail() // refer to validator.js docs
       .withMessage("A valid email is required.")
       .custom(async (account_email) => {
-        const emailExists = await accountModel.checkExistingEmail(
-          account_email
-        );
-        if (emailExists) {
-          throw new Error("Email exists. Please log in or use different email");
-        }
+       const emailExists = await accountModel.checkExistingEmail(account_email);
+       if (emailExists) {
+        throw new Error("Email exists. Please log in or use different email");
+       }
       }),
 
     // password is required and must be strong password
@@ -54,6 +52,9 @@ validate.registationRules = () => {
   ];
 };
 
+/* ******************************
+ * Check data and return errors or continue to registration
+ * ***************************** */
 validate.checkRegData = async (req, res, next) => {
   const { account_firstname, account_lastname, account_email } = req.body;
   let errors = [];
@@ -61,7 +62,7 @@ validate.checkRegData = async (req, res, next) => {
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav();
     res.render("account/register", {
-      errors:null,
+      errors: null,
       title: "Registration",
       nav,
       account_firstname,
@@ -70,7 +71,12 @@ validate.checkRegData = async (req, res, next) => {
     });
     return;
   }
-  next();
+  next()
+  validate.checkRegData = async (req, res, next) => {
+   if (!req.body) {
+      return res.status(400).send("Invalid request body");
+    }
+  };
 };
 
 /* **********************************
@@ -100,7 +106,7 @@ validate.checkLoginData = async (req, res, next) => {
   errors = validationResult(req);
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav();
-    res.render("account/login", {
+    res.render("/account/login", {
       errors,
       title: "Login",
       nav,
@@ -120,7 +126,7 @@ validate.checkLoginData = async (req, res, next) => {
 
 /*******************************
  * update account rukes week5
- ***************************8*/
+ **************************/
 validate.updateAccountRules = () => {
   return [
     body("account_firstname")
@@ -154,30 +160,33 @@ validate.updateAccountRules = () => {
 /****************************
  * check update rules weel 5
  * 
- *********************/
+ *********************/ 
+
 validate.checkUpdateData = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.render("account/update", { errors: errors.array() });
+    return res.render("/account/update", { errors: errors.array() });
   }
   next();
-}
+};
 
 /**************************
  * password rules
- * 
+ *
  ******************/
 validate.passwordRules = () => {
   return [
-  body("new_password")
-    .trim()
+    body("new_password")
+      .trim()
       .escape()
       .isLength({ min: 8 })
       .withMessage("Password must be at least 8 characters long")
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
-      .withMessage("Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character"),
+      .matches(/^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/)
+      .withMessage(
+        "Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character"
+      ),
     body("confirm_password")
-    .trim()
+      .trim()
       .escape()
       .isLength({ min: 8 })
       .withMessage("Confirm password must be at least 8 characters long")
@@ -190,13 +199,14 @@ validate.passwordRules = () => {
 };
 
 /*****************
- * 
+ *
  * check password data
  *********************/
 validate.checkPasswordData = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.render("account/update", { errors: errors.array() });
+    return res.render("account/update", { 
+      errors: errors.array() });
   }
   next();
 };

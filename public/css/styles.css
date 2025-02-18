@@ -337,7 +337,7 @@ a:hover {
 }
 
 /* Style the show password button */
-#show-password {
+#showpassword {
   background-color: #4caf50;
   color: #fff;
   padding: 10px 20px;
@@ -348,16 +348,16 @@ a:hover {
   transition: background-color 0.2s ease-in-out;
 }
 
-#show-password:hover {
+#showpassword:hover {
   background-color: #3e8e41;
 }
 
 /* Style the button when it's in the "Hide Password" state */
-#show-password.hide-password {
+#showpassword.hide-password {
   background-color: #e74c3c;
 }
 
-#show-password.hide-password:hover {
+#showpassword.hide-password:hover {
   background-color: #c0392b;
 }
 

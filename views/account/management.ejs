@@ -7,15 +7,15 @@
         <%# messages() %>
             <% if (errors) { %>
                 <ul class="notice">
-                    <% errors.forEach(error=> { %>
+                    <% errors.forEach(errors=> { %>
                         <li>
                             <%= error.msg %>
                         </li>
                         <% }) %>
                 </ul>
                 <% }%>
-                    <li><a href="/account/account-management">Welcome Basic</a></li>
-                    <li><a href="/account/account-management">You're logged in</a></li>
+                    <li><a href="/account/management">Welcome <%= locals.account_firstname || accountData.account_firstname %></a></li>
+                    <li><a href="/account/management">You're logged in</a></li>
                     </ul>
 
                     <main>
@@ -24,9 +24,7 @@
                             <h3>Inventory Management</h3>
                             <p><a href="/inv/">Manage Inventory</a></p>
                             <% } %>
-                                <p><a href="/account/update/<%= accountData.account_id %>">Edit Account Information</a>
-                                </p>
-                                <p><a href="/account/logout" class="btn btn-danger">Logout</a></li>
+                                <p><a href="/account/update/<%= accountData.account_id %>">Update Account Information</a>
                                 </p>
 
                     </main>

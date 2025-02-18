@@ -17,16 +17,17 @@
                     <main>
                         <form id="loginForm" action="/account/login" method="post">
                             <label for="account_email">Email Address:</label>
-                            <input type="email" id="accountemail" name="account_email" required
-                                value="<%=locals.account_email%>">
+                            <input type="account_email" id="accountEmail" name="account_email" required>
                             <label for="account_password">Password:</label>
-                            <input type="password" id="accountpassword" name="account_password" required
-                                data-trail="password"
+                            <input type="account_password" id="accountPassword" name="account_password" required
                                 pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$">
-                            <button type="button" id="toggle-password">Show Password</button><br><br>
+
                             <span>Note: All fields are required. Password must be at least 12 characters long, contain
                                 at least 1 capital letter, 1 number, and 1 special character.</span>
+                            <button id="showpassword">Show Password</button><br><br>
                             <button type="submit">Login</button>
+                            </fieldset>
                         </form>
                         <p>No account? <a href="/account/register">Sign Up</a></p>
-                    </main>
+                        </div>
+                        <script src="/js/script.js"></script>

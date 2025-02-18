@@ -2,17 +2,15 @@
   <span class="siteName">
     <a href="/" title="Return to home page">CSE Motors</a>
   </span>
-  <nav>
-    <ul>
-      <!-- Login Link (only visible when not logged in) -->
-      <% if (!locals.user) { %>
-        <li><a href="/login">My account</a></li>
-      <% } %>
-      <!-- Welcome and Logout Links (only visible when logged in) -->
-      <% if (locals.user) { %>
-        <li><a href="#">Welcome, <%= locals.user %></a></li>
-        <li><a href="/logout">Logout</a></li>
-      <% } %>
-
+  <div id="header">
+    <% if (!locals.loggedin) { %>
+      <a title="Click to log in" href="/account/login" class="header">My Account</a>
+      <% } else { %>
+      <div class="header-container">
+        <a title="Click to go to Account Management" href="/account/" class="header" Welcome <%= locals.account_firstname || accountData.account_firstname %>>
+        </a>
+        <a title="Click to log out" href="/account/logout" class="header">Logout</a>
+      </div>
+     <% } %>
   </div>
-</header>+
+</header>

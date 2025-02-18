@@ -16,38 +16,44 @@
                 </ul>
                 <% } %>
                     <main>
-                        <form action="/account/register" method="post">
-                            <label for="account_firstname">First Name:</label>
-                            <input type="text" id="accountFirstname" name="account_firstname" required
-                                value="<%=locals.account_firstname%>">
-                            <label for="account_lastname">Last Name:</label>
-                            <input type="text" id="accountLastname" name="account_lastname" required
-                                value="<%=locals.account_lastname%>">
-                            <label for="account_email">Email Address:</label>
-                            <input type="email" id="accountEmail" name="account_email" required
-                                value="<%=locals.account_email%>">
-                            <label for="account_password">Password:</label>
-                            <input type="account_password" id="accountPassword" name="account_password" required
-                                data-trail="password"
-                                pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$">
-                            <button id="show-password" onclick="togglePassword">Show Password</button><br><br>
-                            <span>Note: All fields are required. Password must be at
-                                least 12 characters long, contain at least 1 capital
-                                letter, 1 number, and 1 special character.</span>
-                            <button type="submit">Register</button>
+                        <form id="registerForm" action="/account/register" method="post">
+                            <fieldset>
+                                <label for="account_firstname">First Name:</label>
+                                <input type="text" id="accountFirstname" name="account_firstname" required
+                                    value="<%=locals.account_firstname  %>">
+                                <label for="lastname">Last Name:</label>
+                                <input type="text" id="accountLastname" name="account_lastname" required
+                                    value="<%=locals.account_lastname%>">
+                                <label for="email">Email Address:</label>
+                                <input type="email" id="accountEmail" name="account_email"
+                                    requiredvalue="<%=locals.account_email%>">
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" name="account_password" required
+                                    pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$">
+
+                                <span>Note: All fields are required. Password must be at
+                                    least 12 characters long, contain at least 1 capital
+                                    letter, 1 number, and 1 special character.</span>
+                                <button id="showpassword">Show Password</button><br><br>
+                                <button type="submit">Register</button>
+                            </fieldset>
                         </form>
 
-                        <script>function togglePassword() {
-                                var passwordInput = document.getElementById("password");
-                                var showPasswordButton = document.getElementById("show-password");
-
+                        <script>
+                            const showpassword = document.querySelector("#showpassword");
+                            showpassword.addEventListener("click", function () {
+                                const account_passwordInput = document.getElementById("accountPassword");
+                                const type = account_passwordInput.getAttribute("type");
+                                if (type == "password") {
+                                    account_passwordInput.setAttribute("type", "text");
+                                    showpassword.innerHTML = "Hide Password";
 
                                 } else {
-                                    passwordInput.type = "password";
-                                    showPasswordButton.textContent = "Show Password";
-                                    showPasswordButton.classList.remove("hide-password");
+                                    account_passwordInput.setAttribute("type", "password");
+                                    showpassword.innerHTML = "Show Password"
                                 }
-                            }
+
+                            })
 
                         </script>
                     </main>
