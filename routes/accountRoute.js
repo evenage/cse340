@@ -1,6 +1,5 @@
 /* *********************************
- * Account routes
- * deliver login view activity
+ * Account Routes
  ********************************** */
 const express = require("express");
 const router = new express.Router();
@@ -8,39 +7,24 @@ const accountController = require("../controllers/accountController");
 const utilities = require("../utilities/");
 const regValidate = require("../utilities/account-validation");
 
-/****************
- * unit4 deliver l
- * route to Deliver login view
- * **************************/
+// Route to deliver login view
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
 
-/*********************
- * 
- * route to Deliver register view
-***************************/
+// Route to deliver registration view
 router.get(
   "/register",
   utilities.handleErrors(accountController.buildRegister)
 );
 
-//login account
-router.get("/loginAccount", utilities.handleErrors (accountController.loginAccount))
-
-// route to checklogin view
-//router.get("/",utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagementView));
-
-//management
-router.get("/management",utilities.handleErrors (accountController.buildManagementView))
-
-// Process the registration data
+// Route to process registration data
 router.post(
   "/register",
-  regValidate.registationRules(),
+  regValidate.registrationRules(),
   regValidate.checkRegData,
   utilities.handleErrors(accountController.registerAccount)
 );
 
-// Process the login data
+// Route to process login data
 router.post(
   "/login",
   regValidate.loginRules(),
@@ -48,39 +32,43 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 );
 
-// // update account get view
+// Route to deliver account management view
+router.get(
+  "/",
+  utilities.checkJWTToken,
+  utilities.handleErrors(accountController.buildManagementView)
+);
+
+// Route to deliver account update view
 router.get(
   "/update/:account_id",
+  utilities.checkJWTToken,
   utilities.handleErrors(accountController.getUpdateAccountView)
 );
 
-// //update account
+// Route to process account update
 router.post(
   "/update",
   regValidate.updateAccountRules(),
   regValidate.checkUpdateData,
+  utilities.checkJWTToken,
   utilities.handleErrors(accountController.updateAccount)
 );
 
-//update password
+// Route to process password update
 router.post(
   "/password",
   regValidate.passwordRules(),
   regValidate.checkPasswordData,
+  utilities.checkJWTToken,
   utilities.handleErrors(accountController.updatePassword)
 );
 
-//logout proces
+// Route to handle logout
 router.get("/logout", utilities.handleErrors(accountController.logout));
 
-// delete account
-//router.get(
- // "/delete/:account_id",
-  //-utilities.handleErrors(accountController.deleteAccount)
-//);
 
+module.exports = router;
 
-
-
-
-
+//login account
+//router.get("/loginAccount", utilities.handleErrors (accountController.loginAccount))

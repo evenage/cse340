@@ -12,10 +12,11 @@ require("dotenv").config();
  *************************************** */
 async function buildLogin(req, res, next) {
   let nav = await utilities.getNav();
-  res.render("account/login",
-  { title: "Login",
-  nav,
-  errors: null });
+  res.render("account/login", {
+    title: "Login",
+    nav,
+    errors: null,
+  });
 }
 
 /* ****************************************
@@ -31,15 +32,15 @@ async function buildRegister(req, res, next) {
 }
 
 /* ****************************************
- *  Process login request
- * ************************************ */
+ * Process login request
+ *************************************** */
 async function accountLogin(req, res) {
   let nav = await utilities.getNav();
   const { account_email, account_password } = req.body;
   const accountData = await accountModel.getAccountByEmail(account_email);
   if (!accountData) {
     req.flash("notice", "Please check your credentials and try again.");
-    res.status(400).render("/account/login", {
+    return res.status(400).render("account/login", {
       title: "Login",
       nav,
       errors: null,
@@ -47,30 +48,22 @@ async function accountLogin(req, res) {
     });
   }
   try {
-    if (await bcrypt.compare(account_password, accountData.account_password)) 
-      {
+    if (await bcrypt.compare(account_password, accountData.account_password)) {
       delete accountData.account_password;
       const accessToken = jwt.sign(
-        accountData,
+        { id: accountData.account_id, email: accountData.account_email },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: 3600 * 1000 }
+        { expiresIn: "1h" }
       );
-      if (process.env.NODE_ENV === "development") {
-        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
-      } else {
-        res.cookie("jwt", accessToken, {
-          httpOnly: true,
-          secure: true,
-          maxAge: 3600 * 1000,
-        });
-      }
+      res.cookie("jwt", accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 3600 * 1000,
+      });
       return res.redirect("/account/");
     } else {
-      req.flash(
-        "message notice",
-        "Please check your credentials and try again."
-      );
-      res.status(400).render("account/login", {
+      req.flash("notice", "Invalid credentials. Please try again.");
+      return res.status(400).render("account/login", {
         title: "Login",
         nav,
         errors: null,
@@ -78,32 +71,15 @@ async function accountLogin(req, res) {
       });
     }
   } catch (error) {
-    throw new Error("Access Forbidden");
+    console.error(error);
+    req.flash("notice", "An error occurred. Please try again.");
+    return res.status(500).render("account/login", {
+      title: "Login",
+      nav,
+      errors: null,
+      account_email,
+    });
   }
-}
-
-
-//PROCESS login 2
-
-async function loginAccount(req, res){
-  let nav = await utilities.getNav();
-  const{ account_email, account_password} = req.body;
-  const loginRules = await accountModel.loginAccount(account_email, account_password);
-  if(loginResults){
-    res.session.userid = loginResults.id;
-  req.flash("notice", `welcome, you're logged in.`);
-  res.status(200).render("dashboard", {
-    title: "Dashboard",
-    nav,
-    errors:null });
-} else {
-  req.flash("notice", `sorry, the login failes.`);
-  res.status(401).render("account/login",{
-    title:"Login",
-    nav,
-    errors: null
-  });
-}
 }
 
 /* ****************************************
@@ -121,15 +97,11 @@ async function registerAccount(req, res) {
   // Hash the password before storing
   let hashedPassword;
   try {
-    // regular password and cost (salt is generated automatically)
-    hashedPassword = await bcrypt.hashSync(account_password, 10);
+    hashedPassword = await bcrypt.hash(account_password, 10);
   } catch (error) {
-    req.flash(
-      "notice",
-      "Sorry, there was an error processing the registration."
-    );
-    res.status(500).render("account/register", {
-     title: "Registration",
+    req.flash("notice", "Error processing registration.");
+    return res.status(500).render("account/register", {
+      title: "Registration",
       nav,
       errors: null,
     });
@@ -144,45 +116,40 @@ async function registerAccount(req, res) {
   if (regResult) {
     req.flash(
       "notice",
-      `Congratulations, you\'re registered ${account_firstname}. Please log in.`
-    )
-    res.status(201).render("account/login", { title: "Login", nav, errors:null });
+      `Congratulations, ${account_firstname}. Please log in.`
+    );
+    return res
+      .status(201)
+      .render("account/login", { title: "Login", nav, errors: null });
   } else {
-    req.flash("notice", "Sorry, the registration failed.");
-    res.status(501).render("account/register", { title: "Registration", nav, errors:null});
+    req.flash("notice", "Registration failed.");
+    return res
+      .status(501)
+      .render("account/register", { title: "Registration", nav, errors: null });
   }
 }
 
- // build account view
-
-async function buildManagementView(req, res) {
-    try {
-        const accountData = res.locals.accountData;
-        res.render("account/management", {
-            title: "Account Management",
-            nav,
-            errors: null,
-            accountData,
-            loggedin: res.locals.loggedin
-        });
-    } catch (error) {
-        console.error("Error loading account view:", error);
-        res.redirect("/account/login");
-    }
+/* ****************************************
+ * Account management view
+ *************************************** */
+async function buildManagementView(req, res, next) {
+  let nav = await utilities.getNav();
+  res.render("./account/management", {
+    title: "Account Management",
+    nav,
+    errors: null,
+    accountData ,
+  });
 }
 
-
-
-/**********************************
- * get account information on
- *  login
- * ******************************/
+/* ****************************************
+ * Get account information for update
+ *************************************** */
 async function getUpdateAccountView(req, res, next) {
   if (!req.user) return res.redirect("/account/login");
   let nav = await utilities.getNav();
   const accountData = req.user;
-res.render("./account/update",
-    {
+  res.render("./account/update", {
     title: "Update Account",
     nav,
     errors: null,
@@ -190,12 +157,15 @@ res.render("./account/update",
   });
 }
 
-// // Handle account updates
+/* ****************************************
+ * Update account information
+ *************************************** */
 async function updateAccount(req, res, next) {
   try {
-    const { account_id, account_firstname, account_lastname, account_email } = req.body;
-let nav = await utilities.getNav();
-    const existingUser = await accountModel.getAccountByEmail(email);
+    const { account_id, account_firstname, account_lastname, account_email } =
+      req.body;
+    let nav = await utilities.getNav();
+    const existingUser = await accountModel.getAccountByEmail(account_email);
     if (existingUser && existingUser.account_id !== parseInt(account_id)) {
       return res.render("./account/update", {
         title: "Update Account",
@@ -206,7 +176,12 @@ let nav = await utilities.getNav();
     }
 
     // Update account details
-    await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email);
+    await accountModel.updateAccount(
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email
+    );
 
     res.redirect("/account/management");
   } catch (error) {
@@ -220,35 +195,9 @@ let nav = await utilities.getNav();
   }
 }
 
-
-async function processAccountUpdate(req, res) {
-  try {
-      const { account_firstname, account_lastname, account_email } = req.body;
-      const account_id = req.params.id;
-
-      // Call database update function (example function)
-      const success = await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email);
-
-      if (success) {
-          req.flash("success", "Account updated successfully.");
-          res.redirect("/account");
-      } else {
-          req.flash("error", "Error updating account.");
-          res.redirect(`/account/update/${account_id}`);
-      }
-  } catch (error) {
-      console.error("Error processing account update:", error);
-      res.redirect("/account");
-  }
-}
-
-
-
-
-/*********************
- * 
- *  Handle password updates
- * **********************/
+/* ****************************************
+ * Update password
+ *************************************** */
 async function updatePassword(req, res, next) {
   try {
     const { account_id, new_password } = req.body;
@@ -263,11 +212,7 @@ async function updatePassword(req, res, next) {
       });
     }
 
-    /********************* *********
-     *Hash new password
-     *  Update password in the database
-     * ********************************/
-     const hashedPassword = await bcrypt.hash(new_password, 10);
+    const hashedPassword = await bcrypt.hash(new_password, 10);
     await accountModel.updatePassword(account_id, hashedPassword);
 
     res.redirect("/account/management");
@@ -282,15 +227,23 @@ async function updatePassword(req, res, next) {
   }
 }
 
+/* ****************************************
+ * Logout process
+ *************************************** */
+async function logout(req, res) {
+  res.clearCookie("jwt");
+  req.flash("success", "You have been logged out");
+  res.redirect("/");
+}
 
-// logout process
-async function logout(req, res)  {
-  res.clearCookie('jwt');
-  req.flash('success', 'You have been logged out');
-  res.redirect('/')
-};
-
-module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildManagementView, getUpdateAccountView,
-updateAccount,
- updatePassword, logout, loginAccount,buildAccountView, updateAccountView, processAccountUpdate
+module.exports = {
+  buildLogin,
+  buildRegister,
+  registerAccount,
+  accountLogin,
+  buildManagementView,
+  getUpdateAccountView,
+  updateAccount,
+  updatePassword,
+  logout,
 };
