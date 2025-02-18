@@ -20,12 +20,6 @@ router.get(
 // route to account management view
 router.get("/accountManagement", accountController.buildAccountManagementView);
 
-router.get(
-  "/",
-  utilities.checkLogin,
-  accountController.buildAccountManagementView
-);
-
 // Process the registration data
 router.post(
   "/register",
@@ -63,9 +57,6 @@ router.get('/logout', utilities.handleErrors(accountController.logout));
 
 
 
-// logout process
-router.get('/logout', accountController.logout);
 
 
 module.exports = router;
-

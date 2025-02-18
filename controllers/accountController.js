@@ -2,7 +2,6 @@
  * Account controller
  *************************************** */
 const utilities = require("../utilities/");
-// controllers/accountController.js
 const accountModel = require("../models/account-model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -176,9 +175,7 @@ async function updateAccount(req, res, next) {
 async function updatePassword(req, res, next) {
   try {
     const { account_id, new_password } = req.body;
-
     let nav = await utilities.getNav();
-
     if (new_password.length < 8) {
       return res.render("./account/update", {
         title: "Update Account",
@@ -193,7 +190,6 @@ async function updatePassword(req, res, next) {
 
     // Update password in the database
     await accountModel.updatePassword(account_id, hashedPassword);
-
     res.redirect("/account/manage");
   } catch (error) {
     console.error(error);
@@ -206,23 +202,6 @@ async function updatePassword(req, res, next) {
   }
 }
 
-// Get account management view
-async function getAccountManagement (req, res) {
-  try {
-    const user = await accountModel.getAccountById(req.user.id);
-    if (!user) {
-      return res.redirect("/account/login");
-    }
-
-    res.render("account/management", {
-      title: "Account Management",
-      user,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).render("error", { message: "Server error" });
-  }
-};
 
 // logout process
 async function logout(req, res)  {
@@ -231,70 +210,14 @@ async function logout(req, res)  {
   res.redirect('/');
 };
 
-
-
-/* ****************************************
- *  Process login request
- * ************************************ */
-async function accountLogin(req, res) {
-  let nav = await utilities.getNav();
-  const { account_email, account_password } = req.body;
-  const accountData = await accountModel.getAccountByEmail(account_email);
-  if (!accountData) {
-    req.flash("notice", "Please check your credentials and try again.");
-    res.status(400).render("account/login", {
-      title: "Login",
-      nav,
-      errors: null,
-      account_email,
-    });
-    return;
-  }
-  try {
-    if (await bcrypt.compare(account_password, accountData.account_password)) {
-      delete accountData.account_password;
-      const accessToken = jwt.sign(
-        accountData,
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: 3600 * 1000 }
-      );
-      if (process.env.NODE_ENV === "development") {
-        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
-      } else {
-        res.cookie("jwt", accessToken, {
-          httpOnly: true,
-          secure: true,
-          maxAge: 3600 * 1000,
-        });
-      }
-      return res.redirect("/account/");
-    } else {
-      req.flash(
-        "message notice",
-        "Please check your credentials and try again."
-      );
-      res.status(400).render("account/login", {
-        title: "Login",
-        nav,
-        errors: null,
-        account_email,
-      });
-    }
-  } catch (error) {
-    throw new Error("Access Forbidden");
-  }
-}
-
 module.exports = {
   buildLogin,
   buildRegister,
   registerAccount,
-  loginAccount,
   accountLogin,
   buildAccountManagementView,
   getAccountView,
   updateAccount,
   updatePassword,
-  getAccountManagement,
   logout
 };

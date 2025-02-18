@@ -54,9 +54,6 @@ validate.registationRules = () => {
   ];
 };
 
-/* ******************************
- * Check data and return errors or continue to registration
- * ***************************** */
 validate.checkRegData = async (req, res, next) => {
   const { account_firstname, account_lastname, account_email } = req.body;
   let errors = [];
@@ -74,13 +71,6 @@ validate.checkRegData = async (req, res, next) => {
     return;
   }
   next();
-  validate.checkRegData = async (req, res, next) => {
-    if (!req.body) {
-      return res.status(400).send("Invalid request body");
-    }
-    const { account_firstname, account_lastname, account_email } = req.body;
-    // ...
-  };
 };
 
 /* **********************************
@@ -210,6 +200,5 @@ validate.checkPasswordData = (req, res, next) => {
   }
   next();
 };
-
 
 module.exports = validate;

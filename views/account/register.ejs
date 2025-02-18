@@ -41,16 +41,6 @@
                                 var passwordInput = document.getElementById("password");
                                 var showPasswordButton = document.getElementById("show-password");
 
-                                if (passwordInput.type === "password") {
-                                    passwordInput.type = "text";
-                                    showPasswordButton.textContent = "Hide Password";
-                                    showPasswordButton.classList.add("hide-password");
-                                    showPasswordButton.onclick = function () {
-                                        passwordInput.type = "password";
-                                        showPasswordButton.innerHTML = "Show Password";
-                                        showPasswordButton.className = "";
-                                        showPasswordButton.onclick = togglePassword;
-                                    };
 
                                 } else {
                                     passwordInput.type = "password";

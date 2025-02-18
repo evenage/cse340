@@ -13,8 +13,6 @@ const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const accountRoute = require("./routes/accountRoute");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-
 
 /* ***********************
  * View Engine and Templates
@@ -22,8 +20,6 @@ const cookieParser = require("cookie-parser");
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout"); // not at views root
-app.use(express.static("public"));
-app.use(cookieParser());
 
 /* ***********************
  * Middleware
@@ -42,17 +38,6 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(utilities.checkJWTToken);
-
-
-
-//Express Massages Middleware
-app.use(require("connect-flash")());
-app.use(function (req, res, next) {
-  res.locals.messages = require("express-messages")(req, res);
-  next();
-});
-app.use(cookieParser());
 
 /* ***********************
  * Routes
@@ -64,49 +49,6 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 app.use("/inv", require("./routes/inventoryRoute"));
 // Account routes
 app.use("/account", require("./routes/accountRoute"));
-
-// Admin Routes
-app.get('/admin/dashboard', (req, res) => {
-  res.render('admin/dashboard');
-});
-
-app.get('/admin/inventory', (req, res) => {
-  res.render('admin/inventory');
-});
-
-app.get('/admin/classifications', (req, res) => {
-  res.render('admin/classifications');
-});
-
-app.get('/admin/vehicles', (req, res) => {
-  res.render('admin/vehicles');
-});
-
-// Login Route
-app.get('/login', (req, res) => {
-  res.render('login');
-});
-
-// Logout Route
-app.get('/logout', (req, res) => {
-  res.clearCookie('jwt');
-  res.redirect('/login');
-});
-
-// Public Routes
-app.get('/', (req, res) => {
-  res.render('index');
-});
-
-app.get('/classifications', (req, res) => {
-  res.render('classifications');
-});
-
-app.get('/vehicles', (req, res) => {
-  res.render('vehicles');
-});
-
-
 
 /* ***********************
  *File not found route - must be last route in list
