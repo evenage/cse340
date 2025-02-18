@@ -51,7 +51,7 @@ async function accountLogin(req, res) {
     if (await bcrypt.compare(account_password, accountData.account_password)) {
       delete accountData.account_password;
       const accessToken = jwt.sign(
-        { id: accountData.account_id, email: accountData.account_email },
+        accountData,
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: "1h" }
       );
@@ -138,7 +138,6 @@ async function buildManagementView(req, res, next) {
     title: "Account Management",
     nav,
     errors: null,
-    accountData ,
   });
 }
 
@@ -153,7 +152,6 @@ async function getUpdateAccountView(req, res, next) {
     title: "Update Account",
     nav,
     errors: null,
-    accountData,
   });
 }
 
@@ -247,3 +245,4 @@ module.exports = {
   updatePassword,
   logout,
 };
+ 

@@ -33,16 +33,11 @@ router.post(
 );
 
 // Route to deliver account management view
-router.get(
-  "/",
-  utilities.checkJWTToken,
-  utilities.handleErrors(accountController.buildManagementView)
-);
+router.get("/", utilities.handleErrors(accountController.buildManagementView));
 
 // Route to deliver account update view
 router.get(
   "/update/:account_id",
-  utilities.checkJWTToken,
   utilities.handleErrors(accountController.getUpdateAccountView)
 );
 
@@ -51,7 +46,6 @@ router.post(
   "/update",
   regValidate.updateAccountRules(),
   regValidate.checkUpdateData,
-  utilities.checkJWTToken,
   utilities.handleErrors(accountController.updateAccount)
 );
 
@@ -60,7 +54,6 @@ router.post(
   "/password",
   regValidate.passwordRules(),
   regValidate.checkPasswordData,
-  utilities.checkJWTToken,
   utilities.handleErrors(accountController.updatePassword)
 );
 
@@ -72,3 +65,4 @@ module.exports = router;
 
 //login account
 //router.get("/loginAccount", utilities.handleErrors (accountController.loginAccount))
+ 
