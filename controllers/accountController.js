@@ -5,9 +5,7 @@ const utilities = require("../utilities/");
 const accountModel = require("../models/account-model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-//const flash = require("connect-flash");
 require("dotenv").config();
-
 
 /* ****************************************
  * Deliver login view
@@ -47,7 +45,6 @@ async function accountLogin(req, res) {
       errors: null,
       account_email,
     });
-    return;
   }
   try {
     if (await bcrypt.compare(account_password, accountData.account_password)) 
@@ -108,8 +105,6 @@ async function loginAccount(req, res){
   });
 }
 }
-
-
 
 /* ****************************************
  * Process Registration
@@ -257,7 +252,6 @@ async function processAccountUpdate(req, res) {
 async function updatePassword(req, res, next) {
   try {
     const { account_id, new_password } = req.body;
-
     let nav = await utilities.getNav();
 
     if (new_password.length < 8) {

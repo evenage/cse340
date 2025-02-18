@@ -82,6 +82,5 @@ router.get("/logout", utilities.handleErrors(accountController.logout));
 
 
 
-module.exports = router;
 
 
