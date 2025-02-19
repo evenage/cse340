@@ -91,8 +91,8 @@ async function updatePassword(account_id, hashedPassword) {
 }
 
 // Function to query account information
-const getAccountView= (account_id, callback) => {
-  const query = 'SELECT * FROM accounts WHERE account_id = $1';
+const getAccountView = (account_id, callback) => {
+  const query = "SELECT * FROM accounts WHERE account_id = $1";
   const values = [account_id];
   db.query(query, values, (err, result) => {
     if (err) {
@@ -103,6 +103,40 @@ const getAccountView= (account_id, callback) => {
   });
 };
 
+/* ***************************
+ *  Delete Account
+ * ************************** */
+async function deleteAccount(account_id) {
+  try {
+    const sql = "DELETE FROM account WHERE account_id = $1";
+    const data = await pool.query(sql, [account_id]);
+    return data.rows;
+  } catch (error) {
+    console.error("delete account error " + error);
+    new Error("Delete account Error");
+  }
+}
+
+async function getAccountById(account_id) {
+  try {
+    const result = await db.query("SELECT * FROM accounts WHERE account_id = $1", [account_id]);
+    return result.rows[0]; // Assuming you're using a library like pg for PostgreSQL
+  } catch (error) {
+    console.error("Error fetching account by ID:", error);
+    throw error;
+  }
+}
+
+// Method to delete account by ID
+async function deleteAccountById(account_id) {
+  try {
+    const result = await db.query("DELETE FROM accounts WHERE account_id = $1", [account_id]);
+    return result.rowCount > 0; // Returns true if a row was deleted
+  } catch (error) {
+    console.error("Error deleting account by ID:", error);
+    throw error;
+  }
+}
 
 module.exports = {
   registerAccount,
@@ -110,5 +144,9 @@ module.exports = {
   getAccountByEmail,
   updateAccount,
   updatePassword,
-  getAccountView
+  getAccountView,
+  deleteAccount,
+  getAccountById,
+
+deleteAccountById
 };

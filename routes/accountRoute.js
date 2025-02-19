@@ -60,9 +60,23 @@ router.post(
 // Route to handle logout
 router.get("/logout", utilities.handleErrors(accountController.logout));
 
+// Route to handle the delete inventory item request
+router.get(
+  "/delete/:account_id",
+  utilities.handleErrors(accountController.deleteAccountView)
+);
+
+// Route to handle the delete inv request
+router.post(
+  "/delete/",
+  utilities.handleErrors(accountController.deleteAccount)
+);
+
+// Route to get account data by ID
+router.get('/account/:account_id', accountController.getAccountById);
+
 
 module.exports = router;
 
 //login account
 //router.get("/loginAccount", utilities.handleErrors (accountController.loginAccount))
- 

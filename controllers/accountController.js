@@ -234,6 +234,81 @@ async function logout(req, res) {
   res.redirect("/");
 }
 
+ // Controller function to render the delete confirmation view
+const deleteAccountView = async function (req, res, next) {
+  try {
+    const account_id = parseInt(req.params.account_id);
+    let nav = await utilities.getNav();
+
+    // Fetch account details by account_id
+    const accountData = await accountModel.getAccountById(account_id);
+
+    // Check if accountData is retrieved successfully
+    if (!accountData) {
+      req.flash("notice", "Account not found.");
+      return res.redirect("/account/management");
+    }
+
+    // Render the delete confirmation view with accountData
+    res.render("./account/delete", {
+      title: `Delete Account: ${accountData.account_firstname} ${accountData.account_lastname}`,
+      nav,
+      errors: null,
+      accountData, // Pass the entire accountData object to the view
+    });
+  } catch (error) {
+    console.error("Error fetching account data:", error);
+    req.flash("notice", "An error occurred while fetching account data.");
+    res.redirect("/account/management");
+  }
+};
+
+/* ***************************
+ *  Update delete confirmation Data
+ * ************************** */
+const deleteAccount = async (req, res, next) => {
+  try{
+  let nav = await utilities.getNav();
+  const account_id = parseInt(req.body.account_id);
+  const deleteResult = await accountModel.deleteAccountById(account_id);
+
+  if (deleteResult) {
+    req.flash('notice', 'The account was successfully deleted.');
+    res.redirect('/account/management');
+  } else {
+    req.flash('notice', 'Sorry, the account deletion failed.');
+    res.redirect(`/account/delete/${account_id}`);
+  } } catch (error) {
+    console.error("Error deleting account:", error);
+    req.flash("notice", "An error occurred while deleting the account.");
+    res.redirect("/account/management");
+  }
+
+};
+
+
+// get account by id
+const getAccountById = async (req, res) => {
+  const account_id = parseInt(req.params.account_id);
+
+  if (isNaN(account_id)) {
+    return res.status(400).json({ error: 'Invalid account ID' });
+  }
+
+  try {
+    const accountData = await accountModel.getAccountById(account_id);
+
+    if (!accountData) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
+
+    res.status(200).json(accountData);
+  } catch (error) {
+    console.error('Error fetching account data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 module.exports = {
   buildLogin,
   buildRegister,
@@ -244,5 +319,7 @@ module.exports = {
   updateAccount,
   updatePassword,
   logout,
+  deleteAccount,
+  deleteAccountView,
+  getAccountById
 };
- 

@@ -1,0 +1,55 @@
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
+
+        <%# messages() %>
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>,
+                <% }%>
+
+                    <h1>Delete Confirmation</h1>
+                    <p>Confirm Deletion - The delete is permanent.</p>
+                    <form action="/account/delete" method="post">
+                        <fieldset>
+
+                            <label for="accountFirstname">First name</label>
+                            <input type="text" readonly <% if(locals.account_firstname) { %> value="<%=
+                                locals.account_firstname %>" <% } %>>
+
+
+                                    <label for="accountLastname">Last name</label>
+                                    <input type="text" readonly <% if(locals.account_lastname) { %> value="<%=
+                                        locals.account_lastname %>" <% } %>>
+
+                                            <label for="accountEmail">Email</label>
+                                            <input type="text" readonly <% if(locals.account_email) { %> value="<%=
+                                                locals.account_email %>" <% } %>>
+
+
+                                                    <label for="accountPassword">Password</label>
+                                                    <input type="text" <% if(locals.account_password) { %> value="<%=
+                                                        locals.account_password %>" <% } %>>
+
+
+
+
+                                                            <input type="hidden" name="account_id" <%
+                                                                if(locals.account_id) {%>
+                                                            value="
+                                                            <%= locals.inv_id %>" <% } %>>
+
+
+
+
+                                                                    <button type="submit">Delete
+                                                                    </button>
+                        </fieldset>
+                    </form>
