@@ -234,7 +234,7 @@ async function logout(req, res) {
   res.redirect("/");
 }
 
- // Controller function to render the delete confirmation view
+// Controller function to render the delete confirmation view
 const deleteAccountView = async function (req, res, next) {
   try {
     const account_id = parseInt(req.params.account_id);
@@ -267,21 +267,16 @@ const deleteAccountView = async function (req, res, next) {
  *  Update delete confirmation Data
  * ************************** */
 const deleteAccount = async (req, res, next) => {
-  try{
   let nav = await utilities.getNav();
   const account_id = parseInt(req.body.account_id);
   const deleteResult = await accountModel.deleteAccountById(account_id);
 
   if (deleteResult) {
-    req.flash('notice', 'The account was successfully deleted.');
-    res.redirect('/account/management');
-  } else {
-    req.flash('notice', 'Sorry, the account deletion failed.');
-    res.redirect(`/account/delete/${account_id}`);
-  } } catch (error) {
-    console.error("Error deleting account:", error);
-    req.flash("notice", "An error occurred while deleting the account.");
+    req.flash("notice", `The deletion was successfully .`);
     res.redirect("/account/management");
+  } else {
+    req.flash("notice", "Sorry, the delete failed.");
+    res.redirect("account/delete/account_id");
   }
 };
 
@@ -290,20 +285,20 @@ const getAccountById = async (req, res) => {
   const account_id = parseInt(req.params.account_id);
 
   if (isNaN(account_id)) {
-    return res.status(400).json({ error: 'Invalid account ID' });
+    return res.status(400).json({ error: "Invalid account ID" });
   }
 
   try {
     const accountData = await accountModel.getAccountById(account_id);
 
     if (!accountData) {
-      return res.status(404).json({ error: 'Account not found' });
+      return res.status(404).json({ error: "Account not found" });
     }
 
     res.status(200).json(accountData);
   } catch (error) {
-    console.error('Error fetching account data:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error fetching account data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -319,5 +314,5 @@ module.exports = {
   logout,
   deleteAccount,
   deleteAccountView,
-  getAccountById
+  getAccountById,
 };

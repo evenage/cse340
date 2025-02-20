@@ -32,8 +32,14 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 );
 
+
+
 // Route to deliver account management view
-router.get("/", utilities.handleErrors(accountController.buildManagementView));
+router.get(
+  "/", 
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildManagementView)
+);
 
 // Route to deliver account update view
 router.get(
