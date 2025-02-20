@@ -22,7 +22,11 @@
                     <a href="/account/update/<%= accountData.account_id %>"
                         title="Click to update your account information">Edit Account Information</a>
 
+
                     <% if (accountData.account_type !=='Client' ) { %>
                         <h3>Inventory Management</h3>
                         <p><a href="/inv/">Manage Inventory</a></p>
                         <% } %>
+
+                            <a href="/account/delete/<%= accountData.account_id %>"
+                                title="Click to delete your account information">Delete Account</a>
