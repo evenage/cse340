@@ -283,9 +283,7 @@ const deleteAccount = async (req, res, next) => {
     req.flash("notice", "An error occurred while deleting the account.");
     res.redirect("/account/management");
   }
-
 };
-
 
 // get account by id
 const getAccountById = async (req, res) => {
